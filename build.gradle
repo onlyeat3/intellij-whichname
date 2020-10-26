@@ -16,6 +16,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'com.github.kevinsawicki',name: 'http-request',version: '6.0'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
