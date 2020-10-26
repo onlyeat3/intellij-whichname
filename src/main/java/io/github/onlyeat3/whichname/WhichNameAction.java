@@ -41,7 +41,7 @@ public class WhichNameAction extends AnAction {
                 @Override
                 public List<String> call() throws Exception {
                     Gson gson = new Gson();
-                    String body = HttpRequest.get(String.format("https://devtuuls.tk/api/keyword_search?keyword=%s", URLEncoder.encode(selectedText, "UTF-8")))
+                    String body = HttpRequest.get(String.format("https://devtuuls.tk/api/lookup_var?word=%s", URLEncoder.encode(selectedText, "UTF-8")))
                             .body();
                     ArrayList<Map<String,String>> list = gson.fromJson(body, ArrayList.class);
                     return list.stream()
