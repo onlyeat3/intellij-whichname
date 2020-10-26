@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.5.0'
 }
 
-group 'org.example'
+group 'io.github.onlyeat3'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -26,5 +26,5 @@ intellij {
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      <em>first version</em>"""
 }
