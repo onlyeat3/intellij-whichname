@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.onlyeat3'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
@@ -25,6 +25,5 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
       <em>first version</em>"""
 }
