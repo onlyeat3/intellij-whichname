@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.onlyeat3'
-version '1.0'
+version '1.1.0'
 
 repositories {
     maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
@@ -25,5 +25,10 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
+        <h5>1.1</h5>
+       <em>上下文菜单直接显示中文</em>
+       <em>最小版本切换到2018.2</em>
+       <em>根据当前语言，生成符合命名规则的变量名。</em>
+       <h5>1.0</h5>
       <em>first version</em>"""
 }
