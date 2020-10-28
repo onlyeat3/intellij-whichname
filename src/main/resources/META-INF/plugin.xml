@@ -27,7 +27,7 @@
     <actions>
         <!-- Add your actions here -->
         <action class="io.github.onlyeat3.whichname.WhichNameAction" id="$WhichName"
-            text="Translate and Replace..." description="Translate and Replace">
+            text="翻译为中文变量" description="翻译为中文变量">
             <keyboard-shortcut keymap="$default" first-keystroke="control shift Z"/>
             <keyboard-shortcut keymap="Mac OS X" first-keystroke="control meta O"/>
             <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="control meta O" replace-all="true"/>
