@@ -45,6 +45,7 @@ public class WhichNameAction extends AnAction {
         }
         editor.getSelectionModel().selectWordAtCaret(true);
         String selectedText = editor.getSelectionModel().getSelectedText(true);
+        String currentLanguageName = getCurrentLanguage(e.getDataContext());
         try {
             List<String> list = AppExecutorUtil.getAppExecutorService().submit(new Callable<List<String>>() {
                 @Override
@@ -55,7 +56,7 @@ public class WhichNameAction extends AnAction {
                     List<String> resultList = new ArrayList<>();
                     List<Map<String,String>> list1 = gson.fromJson(body, ArrayList.class);
                     for (Map<String, String> map : list1) {
-                        String namingRule = languageNamingRuleMap.getOrDefault(getCurrentLanguage(e.getDataContext()), "camel");
+                        String namingRule = languageNamingRuleMap.getOrDefault(currentLanguageName, "camel");
                         String varName = map.get(namingRule);
                         if (varName != null) {
                             resultList.add(varName);
