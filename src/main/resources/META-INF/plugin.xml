@@ -42,4 +42,5 @@
             <add-to-group group-id="Diff.EditorPopupMenu" anchor="first"/>
         </group>
     </actions>
+    <idea-version since-build="182" />
 </idea-plugin>
