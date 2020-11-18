@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.onlyeat3'
-version '1.1.1'
+version '1.1.2'
 
 repositories {
     maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
@@ -25,6 +25,10 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
+        <h5>1.1.2</h5>
+        <em>增加对EAP版本IDE的支持</em>
+        <em>简化插件描述</em>
+        <em>强化对golang的命名规则支持</em>
         <h5>1.1.1</h5>
         <em>纠正IDE最小版本限制</em>
         <em>增加作者联系方式，方便反馈问题</em>
