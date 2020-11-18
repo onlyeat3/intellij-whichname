@@ -27,6 +27,7 @@ public class WhichNameAction extends AnAction {
         languageNamingRuleMap.put("swift","camel");
         languageNamingRuleMap.put("sql","underline");
         languageNamingRuleMap.put("go","underline");
+        languageNamingRuleMap.put("golang","underline");
         languageNamingRuleMap.put("php","underline");
         languageNamingRuleMap.put("python","underline");
         languageNamingRuleMap.put("ruby","underline");
