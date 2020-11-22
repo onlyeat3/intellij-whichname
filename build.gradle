@@ -21,8 +21,31 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version 'IU-2020.2'
+    // full list of IntelliJ IDEA releases at https://www.jetbrains.com/intellij-repository/releases
+    // full list of IntelliJ IDEA EAP releases at https://www.jetbrains.com/intellij-repository/snapshots
+    version 'IU-2020.1'
+    //version '2018.2.2'
+    sandboxDirectory project.rootDir.canonicalPath + "/.sandbox"
+    plugins 'java',
+            //'PythonCore:201.6073.9',
+            'Pythonid:201.6668.121',
+            'Kotlin',
+            'org.intellij.scala:2020.1.27',
+            'JavaScriptLanguage',
+            'CSS',
+            'Dart:201.6668.156',
+            'Groovy',
+            'properties',
+            'org.jetbrains.plugins.ruby:201.6668.113',
+            'com.jetbrains.php:201.6668.153',
+            'java-i18n',
+            'DatabaseTools',
+            'org.jetbrains.plugins.go:201.6668.60.126'
+    updateSinceUntilBuild true
+
+//    plugins = ["PythonCore:2018.2.182.3684.101"]
 }
+
 patchPluginXml {
     changeNotes """
         <h5>1.1.2</h5>
