@@ -33,7 +33,7 @@
         <!-- Add your actions here -->
         <action class="io.github.onlyeat3.whichname.WhichNameAction" id="$WhichName"
             text="翻译为英文变量" description="翻译为英文变量">
-            <keyboard-shortcut keymap="$default" first-keystroke="control shift Z"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt L"/>
             <keyboard-shortcut keymap="Mac OS X" first-keystroke="control meta O"/>
             <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="control meta O" replace-all="true"/>
         </action>
