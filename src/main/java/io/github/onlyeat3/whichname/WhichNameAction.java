@@ -38,6 +38,7 @@ public class WhichNameAction extends AnAction {
         languageNamingRuleMap.put("scala","camel");
         languageNamingRuleMap.put("r","pascal");
     }
+
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         Project project = e.getProject();
@@ -65,8 +66,9 @@ public class WhichNameAction extends AnAction {
                             @NotNull LookupElement lookupElement = new LookupElement() {
                                 @Override
                                 public void renderElement(LookupElementPresentation presentation) {
-                                    presentation.setTypeText(map.get("word"));
+                                    presentation.setTypeText("from "+map.get("origin"));
                                     presentation.setItemText(varName);
+                                    presentation.setTailText(" "+map.get("word"));
                                 }
 
                                 @Override
@@ -94,6 +96,9 @@ public class WhichNameAction extends AnAction {
     public String getCurrentLanguage(DataContext dataContext){
         Language lang = LangDataKeys.LANGUAGE.getData(dataContext);
         if (lang != null) {
+            if (lang.getBaseLanguage() != null) {
+                return lang.getBaseLanguage().getDisplayName().toLowerCase();
+            }
             return lang.getID().toLowerCase();
         }
         return null;
