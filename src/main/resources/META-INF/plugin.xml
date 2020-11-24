@@ -47,5 +47,5 @@
             <add-to-group group-id="Diff.EditorPopupMenu" anchor="first"/>
         </group>
     </actions>
-    <idea-version since-build="182" until-build="999" />
+    <idea-version since-build="181" until-build="999" />
 </idea-plugin>
