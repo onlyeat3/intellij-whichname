@@ -12,6 +12,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.util.concurrency.AppExecutorUtil;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URLEncoder;
@@ -46,7 +47,10 @@ public class WhichNameAction extends AnAction {
         if (!isWriteable(editor.getProject(),editor.getDocument())) {
             return;
         }
-        editor.getSelectionModel().selectWordAtCaret(true);
+        if (StringUtils.isEmpty(editor.getSelectionModel().getSelectedText())) {
+            editor.getSelectionModel().selectWordAtCaret(true);
+        }
+
         String selectedText = editor.getSelectionModel().getSelectedText(true);
         String currentLanguageName = getCurrentLanguage(e.getDataContext());
         try {
