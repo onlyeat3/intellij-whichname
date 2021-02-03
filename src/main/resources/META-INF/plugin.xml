@@ -27,6 +27,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <applicationService serviceImplementation="io.github.onlyeat3.whichname.TranslationService" />
+        <postStartupActivity implementation="io.github.onlyeat3.whichname.WNStartUpActivity" />
     </extensions>
 
     <actions>
