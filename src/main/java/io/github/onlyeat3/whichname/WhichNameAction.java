@@ -3,6 +3,7 @@ package io.github.onlyeat3.whichname;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupElementPresentation;
 import com.intellij.codeInsight.lookup.LookupManager;
 import com.intellij.lang.Language;
@@ -60,27 +61,16 @@ public class WhichNameAction extends AnAction {
                     Gson gson = new Gson();
                     String body = HttpRequest.get(String.format("https://devtuuls.tk/api/lookup_var?word=%s", URLEncoder.encode(selectedText, "UTF-8")))
                             .body();
-
                     List<LookupElement> elements = new ArrayList<>();
                     List<Map<String,String>> list1 = gson.fromJson(body, ArrayList.class);
                     for (Map<String, String> map : list1) {
                         String namingRule = languageNamingRuleMap.getOrDefault(currentLanguageName, "camel");
                         String varName = map.get(namingRule);
                         if (varName != null) {
-                            @NotNull LookupElement lookupElement = new LookupElement() {
-                                @Override
-                                public void renderElement(LookupElementPresentation presentation) {
-                                    presentation.setTypeText("from "+map.get("origin"));
-                                    presentation.setItemText(varName);
-                                    presentation.setTailText(" "+map.get("word"));
-                                }
-
-                                @Override
-                                public @NotNull String getLookupString() {
-                                    return varName;
-                                }
-                            };
-                            elements.add(lookupElement);
+                            LookupElementBuilder lookupElementBuilder = LookupElementBuilder.create(varName)
+                                    .withTypeText("from " + map.get("origin"))
+                                    .withTailText(" " + map.get("word"));
+                            elements.add(lookupElementBuilder);
                         }
                     }
                     return elements;
