@@ -1,10 +1,7 @@
 package io.github.onlyeat3.whichname;
 
-import com.github.kevinsawicki.http.HttpRequest;
-import com.google.gson.Gson;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.codeInsight.lookup.LookupElementPresentation;
 import com.intellij.codeInsight.lookup.LookupManager;
 import com.intellij.lang.Language;
 import com.intellij.openapi.actionSystem.*;
@@ -13,14 +10,16 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.util.concurrency.AppExecutorUtil;
+import io.github.onlyeat3.whichname.utils.WhichNameRequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 public class WhichNameAction extends AnAction {
     public static final Map<String, String> languageNamingRuleMap = new HashMap<>();
@@ -58,12 +57,9 @@ public class WhichNameAction extends AnAction {
             List<LookupElement> list = AppExecutorUtil.getAppExecutorService().submit(new Callable<List<LookupElement>>() {
                 @Override
                 public List<LookupElement> call() throws Exception {
-                    Gson gson = new Gson();
-                    String body = HttpRequest.get(String.format("https://devtuuls.tk/api/lookup_var?word=%s", URLEncoder.encode(selectedText, "UTF-8")))
-                            .body();
+                    List<Map<String, String>> searchResults = WhichNameRequestUtils.searchForMap(selectedText);
                     List<LookupElement> elements = new ArrayList<>();
-                    List<Map<String,String>> list1 = gson.fromJson(body, ArrayList.class);
-                    for (Map<String, String> map : list1) {
+                    for (Map<String, String> map : searchResults) {
                         String namingRule = languageNamingRuleMap.getOrDefault(currentLanguageName, "camel");
                         String varName = map.get(namingRule);
                         if (varName != null) {

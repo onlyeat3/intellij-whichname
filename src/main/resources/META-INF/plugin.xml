@@ -27,6 +27,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <toolWindow id="WhichName" secondary="true" icon="AllIcons.General.Modified" anchor="right"
+                    factoryClass="io.github.onlyeat3.whichname.ui.WhichNameWindowFactory"/>
     </extensions>
 
     <actions>
