@@ -6,7 +6,6 @@ public class SearchResult {
 
     private String camel;
     private String pascal;
-    private String plainText;
     private String underline;
 
     public String getOrigin() {
@@ -39,14 +38,6 @@ public class SearchResult {
 
     public void setPascal(String pascal) {
         this.pascal = pascal;
-    }
-
-    public String getPlainText() {
-        return plainText;
-    }
-
-    public void setPlainText(String plainText) {
-        this.plainText = plainText;
     }
 
     public String getUnderline() {

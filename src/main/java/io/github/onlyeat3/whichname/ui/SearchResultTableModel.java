@@ -2,11 +2,13 @@ package io.github.onlyeat3.whichname.ui;
 
 import io.github.onlyeat3.whichname.model.SearchResult;
 
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-public class SearchResultTableModel extends AbstractTableModel {
+public class SearchResultTableModel extends DefaultTableModel {
     private List<SearchResult> searchResultList = new ArrayList<>();
 
     public SearchResultTableModel(List<SearchResult> searchResultList) {
@@ -18,7 +20,9 @@ public class SearchResultTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return this.searchResultList.size();
+        return Optional.ofNullable(this.searchResultList)
+                .orElse(Collections.emptyList())
+                .size();
     }
 
     @Override
@@ -35,22 +39,19 @@ public class SearchResultTableModel extends AbstractTableModel {
         Object value = null;
         switch (columnIndex) {
             case 0:
-                value = row.getOrigin();
+                value = row.getWord();
                 break;
             case 1:
-                value = row.getWord();
+                value = row.getPascal();
                 break;
             case 2:
                 value = row.getCamel();
                 break;
             case 3:
-                value = row.getPascal();
+                value = row.getUnderline();
                 break;
             case 4:
-                value = row.getPlainText();
-                break;
-            case 5:
-                value = row.getUnderline();
+                value = row.getOrigin();
                 break;
             default:
                 value = null;
@@ -64,5 +65,10 @@ public class SearchResultTableModel extends AbstractTableModel {
 
     public void setSearchResultList(List<SearchResult> searchResultList) {
         this.searchResultList = searchResultList;
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
     }
 }

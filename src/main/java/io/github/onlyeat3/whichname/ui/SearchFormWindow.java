@@ -1,15 +1,21 @@
 package io.github.onlyeat3.whichname.ui;
 
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.wm.ToolWindow;
+import io.github.onlyeat3.whichname.listener.TableCopyAdapter;
 import io.github.onlyeat3.whichname.model.SearchResult;
 import io.github.onlyeat3.whichname.utils.WhichNameRequestUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 public class SearchFormWindow {
@@ -17,31 +23,72 @@ public class SearchFormWindow {
     private JPanel panelMain;
     private JButton btnSearch;
     private JTextField txtKeyword;
-    private JPanel topPanel;
     private JScrollPane listPane;
     private JTable tableList;
-    private JList lsWord;
+    private JPanel topPanel;
+    private JTextPane loadingTextPane;
 
-    public SearchFormWindow(ToolWindow toolWindow){
+    public SearchFormWindow(ToolWindow toolWindow) {
+        this.loadingTextPane.setVisible(false);
+        StyledDocument doc = this.loadingTextPane.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
         this.toolWindow = toolWindow;
-        TableColumn headerA = new TableColumn();
-        headerA.setHeaderValue("aaaaa");
-        tableList.addColumn(headerA);
+
         SearchResultTableModel tableModel = new SearchResultTableModel();
+        tableModel.setColumnIdentifiers(new Object[]{"word", "pascal", "camel", "underline", "origin"});
         tableList.setModel(tableModel);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
+        tableList.setDefaultRenderer(Object.class, renderer);
+
+        new TableCopyAdapter(tableList);
+
         this.btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tableList.removeAll();
-
-                String keyword = txtKeyword.getText();
-                if (StringUtils.isEmpty(keyword)) {
-                    return;
-                }
-                List<SearchResult> searchResults = WhichNameRequestUtils.searchForBean(keyword);
-                tableModel.setSearchResultList(searchResults);
+                loadData(tableModel);
             }
         });
+        this.txtKeyword.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    loadData(tableModel);
+                }
+            }
+        });
+    }
+
+
+    private void loadData(SearchResultTableModel tableModel) {
+        this.tableList.removeAll();
+        String keyword = txtKeyword.getText();
+        if (StringUtils.isEmpty(keyword)) {
+            return;
+        }
+        loadingTextPane.setVisible(true);
+        listPane.setVisible(false);
+        panelMain.revalidate();
+        panelMain.repaint();
+
+        List<SearchResult> searchResults = WhichNameRequestUtils.searchForBean(keyword);
+        tableModel.setSearchResultList(searchResults);
+
+        loadingTextPane.setVisible(false);
+        listPane.setVisible(true);
+        panelMain.revalidate();
+        panelMain.repaint();
     }
 
     public JPanel getContent() {
