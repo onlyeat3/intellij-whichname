@@ -18,13 +18,17 @@ public class WhichNameRequestUtils {
 
     public static String search(String keyword){
         try {
-            //String url = String.format("https://devtuuls.tk/api/lookup_var?word=%s", URLEncoder.encode(selectedText, "UTF-8"));
             String url = String.format("https://whichname.top/api/lookup_var?word=%s", URLEncoder.encode(keyword, "UTF-8"));
             return HttpUtil.get(url);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try{
+                String url = String.format("https://devtuuls.tk/api/lookup_var?word=%s", URLEncoder.encode(keyword, "UTF-8"));
+                return HttpUtil.get(url);
+            }catch (Exception ex){
+                ex.printStackTrace();
+                return null;
+            }
         }
-        return null;
     }
 
     public static List<Map<String, String>> searchForMap(String keyword){
