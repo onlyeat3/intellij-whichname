@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class SearchFormWindow {
@@ -72,23 +73,26 @@ public class SearchFormWindow {
 
 
     private void loadData(SearchResultTableModel tableModel) {
-        this.tableList.removeAll();
+        tableList.removeAll();
         String keyword = txtKeyword.getText();
         if (StringUtils.isEmpty(keyword)) {
             return;
         }
+
         loadingTextPane.setVisible(true);
         listPane.setVisible(false);
-        panelMain.revalidate();
-        panelMain.repaint();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
 
-        List<SearchResult> searchResults = WhichNameRequestUtils.searchForBean(keyword);
-        tableModel.setSearchResultList(searchResults);
+                List<SearchResult> searchResults = WhichNameRequestUtils.searchForBean(keyword);
+                tableModel.setSearchResultList(searchResults);
 
-        loadingTextPane.setVisible(false);
-        listPane.setVisible(true);
-        panelMain.revalidate();
-        panelMain.repaint();
+                loadingTextPane.setVisible(false);
+                listPane.setVisible(true);
+            }
+        });
+
     }
 
     public JPanel getContent() {
